@@ -4,9 +4,7 @@
 //  Add a new class
 // ============================================================
 
-$page_title = "Add Class";
-require_once '../../includes/header.php';
-require_once '../../includes/sidebar.php';
+session_start();
 require_once '../../config/db.php';
 
 $errors = [];
@@ -60,6 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 }
+
+$page_title = "Add Class";
+require_once '../../includes/header.php';
+require_once '../../includes/sidebar.php';
 ?>
 
 <!-- ── PAGE HEADER ────────────────────────────────────────── -->

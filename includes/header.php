@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Base URL — adjust if hosted in a subdirectory
-define('BASE_URL', '/school-system/');
+define('BASE_URL', '/SchoolManagementSystem/');
 
 require_once __DIR__ . '/../includes/auth_check.php';
 

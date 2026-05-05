@@ -4,9 +4,7 @@
 //  Add a new student
 // ============================================================
 
-$page_title = "Add Student";
-require_once '../../includes/header.php';
-require_once '../../includes/sidebar.php';
+session_start();
 require_once '../../config/db.php';
 
 // ── Fetch classes for dropdown ───────────────────────────────
@@ -74,65 +72,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ── Insert ───────────────────────────────────────────────
     if (empty($errors)) {
-        $cnic    = !empty($input['cnic'])    ? $input['cnic']    : null;
-        $contact = !empty($input['contact']) ? $input['contact'] : null;
-        $address = !empty($input['address']) ? $input['address'] : null;
+        $cnic      = !empty($input['cnic'])    ? $input['cnic']    : null;
+        $contact   = !empty($input['contact']) ? $input['contact'] : null;
+        $address   = !empty($input['address']) ? $input['address'] : null;
+        $class_id  = (int)$input['class_id'];
 
-        $stmt = mysqli_prepare($conn, "
-            INSERT INTO students
-                (name, father_name, cnic, contact, address, class_id, admission_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-        mysqli_stmt_bind_param(
-            $stmt, "sssssис",
-            $input['name'],
-            $input['father_name'],
-            $cnic,
-            $contact,
-            $address,
-            $input['class_id'],
-            $input['admission_date']
-        );
-
-        // Fix: correct type string
-        $stmt = mysqli_prepare($conn, "
-            INSERT INTO students
-                (name, father_name, cnic, contact, address, class_id, admission_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-        $class_id_int = (int)$input['class_id'];
-        mysqli_stmt_bind_param(
-            $stmt, "sssssис",
-            $input['name'], $input['father_name'],
-            $cnic, $contact, $address,
-            $class_id_int, $input['admission_date']
-        );
-
-        $stmt = mysqli_prepare($conn, "
-            INSERT INTO students
-                (name, father_name, cnic, contact, address, class_id, admission_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-        $class_id_int = (int)$input['class_id'];
-        mysqli_stmt_bind_param($stmt, "sssssис", 
-            $input['name'], $input['father_name'],
-            $cnic, $contact, $address,
-            $class_id_int, $input['admission_date']
-        );
-
-        // Clean insert
         $stmt = mysqli_prepare($conn, "
             INSERT INTO students (name, father_name, cnic, contact, address, class_id, admission_date)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $cid = (int)$input['class_id'];
         mysqli_stmt_bind_param($stmt, "sssssis",
             $input['name'],
             $input['father_name'],
             $cnic,
             $contact,
             $address,
-            $cid,
+            $class_id,
             $input['admission_date']
         );
 
@@ -146,6 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 }
+
+$page_title = "Add Student";
+require_once '../../includes/header.php';
+require_once '../../includes/sidebar.php';
 ?>
 
 <!-- ── PAGE HEADER ────────────────────────────────────────── -->

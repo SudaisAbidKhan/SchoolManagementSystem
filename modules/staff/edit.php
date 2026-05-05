@@ -4,9 +4,7 @@
 //  Edit an existing staff member
 // ============================================================
 
-$page_title = "Edit Staff";
-require_once '../../includes/header.php';
-require_once '../../includes/sidebar.php';
+session_start();
 require_once '../../config/db.php';
 
 $roles = ['Teacher', 'Admin', 'Accountant', 'Peon', 'Other'];
@@ -89,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 }
+
+$page_title = "Edit Staff";
+require_once '../../includes/header.php';
+require_once '../../includes/sidebar.php';
 ?>
 
 <!-- ── PAGE HEADER ────────────────────────────────────────── -->

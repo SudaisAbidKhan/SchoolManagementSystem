@@ -4,9 +4,7 @@
 //  Edit an existing student record
 // ============================================================
 
-$page_title = "Edit Student";
-require_once '../../includes/header.php';
-require_once '../../includes/sidebar.php';
+session_start();
 require_once '../../config/db.php';
 
 // ── Validate ID ──────────────────────────────────────────────
@@ -104,17 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             SET name=?, father_name=?, cnic=?, contact=?, address=?, class_id=?, admission_date=?
             WHERE id=?
         ");
-        mysqli_stmt_bind_param($stmt, "sssssiси",
-            $input['name'], $input['father_name'],
-            $cnic, $contact, $address,
-            $cid, $input['admission_date'], $id
-        );
-
-        $stmt = mysqli_prepare($conn, "
-            UPDATE students
-            SET name=?, father_name=?, cnic=?, contact=?, address=?, class_id=?, admission_date=?
-            WHERE id=?
-        ");
         mysqli_stmt_bind_param($stmt, "sssssisi",
             $input['name'], $input['father_name'],
             $cnic, $contact, $address,
@@ -131,6 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 }
+
+$page_title = "Edit Student";
+require_once '../../includes/header.php';
+require_once '../../includes/sidebar.php';
 ?>
 
 <!-- ── PAGE HEADER ────────────────────────────────────────── -->
